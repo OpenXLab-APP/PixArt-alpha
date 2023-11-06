@@ -4,10 +4,9 @@ emoji: 👀
 colorFrom: pink
 colorTo: purple
 sdk: gradio
-sdk_version: 3.50.2
+sdk_version: 4.1.1
 app_file: app.py
 pinned: false
-license: agpl-3.0
 ---
 
 Inference Code: https://github.com/PixArt-alpha/PixArt-alpha

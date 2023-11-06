@@ -22,7 +22,7 @@ if not torch.cuda.is_available():
 MAX_SEED = np.iinfo(np.int32).max
 CACHE_EXAMPLES = torch.cuda.is_available() and os.getenv("CACHE_EXAMPLES", "1") == "1"
 MAX_IMAGE_SIZE = int(os.getenv("MAX_IMAGE_SIZE", "1024"))
-USE_TORCH_COMPILE = os.getenv("USE_TORCH_COMPILE", "1") == "1"
+USE_TORCH_COMPILE = os.getenv("USE_TORCH_COMPILE", "0") == "1"
 ENABLE_CPU_OFFLOAD = os.getenv("ENABLE_CPU_OFFLOAD", "0") == "1"
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -96,6 +96,7 @@ if torch.cuda.is_available():
     pipe = PixArtAlphaPipeline.from_pretrained(
         "PixArt-alpha/PixArt-XL-2-1024-MS",
         torch_dtype=torch.float16,
+        variant="fp16",
         use_safetensors=True,
     )
 
@@ -104,6 +105,9 @@ if torch.cuda.is_available():
     else:
         pipe.to(device)
         print("Loaded on Device!")
+
+    # speed-up T5
+    pipe.text_encoder.to_bettertransformer()
 
     if USE_TORCH_COMPILE:
         pipe.transformer = torch.compile(
@@ -254,7 +258,6 @@ with gr.Blocks(css="style.css") as demo:
         fn=lambda x: gr.update(visible=x),
         inputs=use_negative_prompt,
         outputs=negative_prompt,
-        queue=False,
         api_name=False,
     )
 
@@ -282,4 +285,5 @@ with gr.Blocks(css="style.css") as demo:
     )
 
 if __name__ == "__main__":
-    demo.queue(max_size=20).launch()
+    # demo.queue(max_size=20).launch()
+    demo.launch(share=True)
