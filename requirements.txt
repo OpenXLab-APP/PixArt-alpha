@@ -7,4 +7,5 @@ transformers
 gradio==4.1.1
 Pillow==10.1.0
 sentencepiece==0.1.99
+optimum
 
