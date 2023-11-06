@@ -13,9 +13,10 @@ import torch
 
 from diffusers import AutoencoderKL, PixArtAlphaPipeline
 
-DESCRIPTION = """# PixArt-Alpha 1024
-#### [PixArt-Alpha 1024](https://github.com/PixArt-alpha/PixArt-alpha) is a transformer-based text-to-image diffusion system trained on text embeddings from T5. This demo uses the [PixArt-alpha/PixArt-XL-2-1024-MS](https://huggingface.co/PixArt-alpha/PixArt-XL-2-1024-MS) checkpoint.
-"""
+DESCRIPTION = """![Logo](https://raw.githubusercontent.com/PixArt-alpha/PixArt-alpha.github.io/master/static/images/logo.png)
+        # PixArt-Alpha 1024
+        #### [PixArt-Alpha 1024](https://github.com/PixArt-alpha/PixArt-alpha) is a transformer-based text-to-image diffusion system trained on text embeddings from T5. This demo uses the [PixArt-alpha/PixArt-XL-2-1024-MS](https://huggingface.co/PixArt-alpha/PixArt-XL-2-1024-MS) checkpoint.
+        """
 if not torch.cuda.is_available():
     DESCRIPTION += "\n<p>Running on CPU 🥶 This demo does not work on CPU.</p>"
 
@@ -82,7 +83,7 @@ style_list = [
 
 styles = {k["name"]: (k["prompt"], k["negative_prompt"]) for k in style_list}
 STYLE_NAMES = list(styles.keys())
-DEFAULT_STYLE_NAME = "Cinematic"
+DEFAULT_STYLE_NAME = "(No style)"
 
 
 def apply_style(style_name: str, positive: str, negative: str = "") -> Tuple[str, str]:
@@ -164,12 +165,14 @@ def generate(
 
 
 examples = [
+    "A small cactus with a happy face in the Sahara desert.",
+    "Pirate ship trapped in a cosmic maelstrom nebula, rendered in cosmic beach whirlpool engine, volumetric lighting, spectacular, ambient lights, light pollution, cinematic atmosphere, art nouveau style, illustration art artwork by SenseiJaye, intricate detail.",
+    "stars, water, brilliantly, gorgeous large scale scene, a little girl, in the style of dreamy realism, light gold and amber, blue and pink, brilliantly illuminated in the background.",
     "3d digital art of an adorable ghost, glowing within, holding a heart shaped pumpkin, Halloween, super cute, spooky haunted house background",
     "beautiful lady, freckles, big smile, blue eyes, short ginger hair, dark makeup, wearing a floral blue vest top, soft light, dark grey background",
     "professional portrait photo of an anthropomorphic cat wearing fancy gentleman hat and jacket walking in autumn forest.",
     "an astronaut sitting in a diner, eating fries, cinematic, analog film",
     "Albert Einstein in a surrealist Cyberpunk 2077 world, hyperrealistic",
-    "cinematic film still of Futuristic hero with golden dark armour with machine gun,  muscular body",
 ]
 
 with gr.Blocks(css="style.css") as demo:
