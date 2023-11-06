@@ -1,11 +1,10 @@
---index-url https://download.pytorch.org/whl/cu118
-torch==2.0.1
-
-diffusers
+diffusers>=0.22.0
 accelerate
 transformers
 gradio==4.1.1
 Pillow==10.1.0
 sentencepiece==0.1.99
 optimum
+--extra-index-url https://download.pytorch.org/whl/cu118
+torch==2.0.1
 
