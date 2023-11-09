@@ -1,4 +1,4 @@
-diffusers>=0.22.0
+diffusers==0.22.3
 accelerate
 transformers
 gradio==4.1.1
